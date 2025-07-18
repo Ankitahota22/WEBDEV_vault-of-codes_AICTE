@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Registration Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f8fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .strength {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .strength.weak { color: red; }
+    .strength.medium { color: orange; }
+    .strength.strong { color: green; }
+
+    .terms {
+      margin-top: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form class="form-container">
+    <h2>User Registration</h2>
+
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" required>
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" required>
+    <div id="strength" class="strength"></div>
+
+    <label for="confirm-password">Confirm Password</label>
+    <input type="password" id="confirm-password" required>
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" required>
+
+    <label>Gender</label>
+    <select id="gender">
+      <option value="">Select</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label for="profile-pic">Profile Picture</label>
+    <input type="file" id="profile-pic">
+
+    <div class="terms">
+      <input type="checkbox" id="terms" required>
+      <label for="terms"> I agree to the Terms and Conditions</label>
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    const passwordInput = document.getElementById('password');
+    const strengthDiv = document.getElementById('strength');
+
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+      let strength = '';
+      let score = 0;
+
+      if (val.length > 6) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[@$!%*?&]/.test(val)) score++;
+
+      if (score <= 1) {
+        strength = '<span class="strength weak">Weak</span>';
+      } else if (score === 2 || score === 3) {
+        strength = '<span class="strength medium">Medium</span>';
+      } else {
+        strength = '<span class="strength strong">Strong</span>';
+      }
+
+      strengthDiv.innerHTML = strength;
+    });
+  </script>
+</body>
+</html>
