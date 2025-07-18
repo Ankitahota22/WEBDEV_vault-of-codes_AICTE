@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VaultofCodes - Certificate Verifier</title>
+
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    .theme-toggle {
+      text-align: right;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 20px 0;
+      background-color: #ffffff;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    body.dark .brand-header {
+      background-color: #1e1e1e;
+      border-color: #333;
+    }
+
+    .brand-logo {
+      height: 48px;
+      width: auto;
+    }
+
+    .brand-title {
+      font-size: 26px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark .container {
+      background-color: #1e1e1e;
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.05);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    }
+
+    body.dark input[type="text"] {
+      background-color: #2c2c2c;
+      color: #fff;
+      border-color: #444;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .animated-heading {
+      text-align: center;
+      font-weight: 600;
+      font-size: 26px;
+      margin-bottom: 20px;
+      animation: slideIn 0.6s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .validation-message {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .toast {
+      visibility: hidden;
+      min-width: 240px;
+      background-color: #28a745;
+      color: #fff;
+      padding: 14px;
+      position: fixed;
+      z-index: 999;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%);
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.5s ease, bottom 0.5s ease;
+      font-weight: 500;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+
+    .footer {
+      background-color: #fff;
+      color: #666;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 14px;
+      margin-top: 60px;
+      border-top: 1px solid #eee;
+    }
+
+    body.dark .footer {
+      background-color: #1e1e1e;
+      color: #aaa;
+      border-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle">
+    <label>
+      <input type="checkbox" id="darkModeToggle">
+      Dark Mode
+    </label>
+  </div>
+
+  <header class="brand-header">
+    <img src="logo.png" alt="VaultofCodes Logo" class="brand-logo" />
+    <h1 class="brand-title">VaultofCodes</h1>
+  </header>
+
+  <main>
+    <div class="container">
+      <h2 class="animated-heading">🔍 Certificate Verifier</h2>
+      <input id="identifier" type="text" placeholder="Enter Email or ID"/>
+      <button onclick="verifyStudent()">Verify</button>
+      <div id="validation-message" class="validation-message"></div>
+    </div>
+
+    <div id="result"></div>
+    <div class="spinner hidden"></div>
+  </main>
+
+  <div id="toast" class="toast">Verification status will appear here</div>
+  <footer class="footer">
+    <p>&copy; 2025 VaultofCodes. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const verifyStudent = () => {
+      const input = document.getElementById("identifier");
+      const value = input.value.trim();
+      const message = document.getElementById("validation-message");
+
+      if (!value || (!value.includes("@") && isNaN(value))) {
+        message.textContent = "Enter a valid email or numeric ID.";
+        message.style.display = "block";
+        return;
+      }
+
+      message.style.display = "none";
+      showSpinner();
+
+      setTimeout(() => {
+        hideSpinner();
+        showToast("Verification successful!", "success");
+      }, 2000);
+    };
+
+    function showSpinner() {
+      document.querySelector(".spinner").classList.remove("hidden");
+    }
+
+    function hideSpinner() {
+      document.querySelector(".spinner").classList.add("hidden");
+    }
+
+    function showToast(msg, type = "success") {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.style.backgroundColor = type === "error" ? "#e74c3c" : "#28a745";
+      toast.className = "toast show";
+      setTimeout(() => {
+        toast.className = toast.className.replace("show", "");
+      }, 3000);
+    }
+
+    document.getElementById("darkModeToggle").addEventListener("change", function () {
+      document.body.classList.toggle("dark", this.checked);
+    });
+
+    document.getElementById("identifier").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        verifyStudent();
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("identifier").focus();
+    });
+  </script>
+</body>
+</html>
