@@ -36,30 +36,30 @@ The repository contains the original work completed during the internship, organ
 ```text
 WEBDEV_vault-of-codes_AICTE/
 │
-├── assignments/
+├── Assignments/
 │   ├── Assignment-1.html
 │   ├── Assignment-2.html
 │   └── Assignment-3/
 │       ├── index.html
 │       └── logo.png
 │
-├── final-projects/
+├── Final-projects/
 │   ├── FA1.html
 │   ├── FA2.html
 │   └── project.html
 │
-├── assets/
+├── Assets/
 └── README.md
 ```
 
 ### Project Links
 
-- [Assignment 1 – Personal Portfolio](assignments/Assignment-1.html)
-- [Assignment 2 – Internship Landing Page](assignments/Assignment-2.html)
-- [Assignment 3 – Certificate Verification UI](assignments/Assignment-3/index.html)
-- [Final Project 1 – Enhanced Portfolio](final-projects/FA1.html)
-- [Final Project 2 – Registration Form](final-projects/FA2.html)
-- [Online Booking System](final-projects/project.html)
+- [Assignment 1 – Personal Portfolio](Assignments/Assignment-1.html)
+- [Assignment 2 – Internship Landing Page](Assignments/Assignment-2.html)
+- [Assignment 3 – Certificate Verification UI](Assignments/Assignment-3/index.html)
+- [Final Project 1 – Enhanced Portfolio](Final_projects/FA1.html)
+- [Final Project 2 – Registration Form](Final_projects/FA2.html)
+- [Online Booking System](Final_projects/project.html)
 
 ## 💻 Assignments and Projects
 
